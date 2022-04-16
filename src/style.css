@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .grid-element {
+    @apply hover:shadow-2xl hover:shadow-blue-800 active:bg-gray-900 bg-blue-500 rounded-xl flex items-center justify-center;
+  }
+}
