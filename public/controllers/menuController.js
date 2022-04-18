@@ -10,6 +10,7 @@ $("#mode").change(function () {
     $("#difficulty").css("pointer-events", "auto");
   }
 
+  localStorage.setItem("mode", $("#mode").val());
   localStorage.setItem("difficultyOpacity", $("#difficulty").css("opacity"));
   localStorage.setItem(
     "difficultyPointerEvents",
@@ -17,9 +18,15 @@ $("#mode").change(function () {
   );
 });
 
+//control difficulty drop down
+$("#difficulty").change(function () {
+  localStorage.setItem("difficulty", $("#difficulty").val());
+});
+
 //control marker drop down
 $("#marker").change(() => {
   setMarker();
+  localStorage.setItem("marker", $("#marker").val());
 });
 
 //control start and reset buttons
@@ -29,10 +36,6 @@ $("#start").click(() => {
 
   $("#right").css("opacity", "1");
   $("#right").css("pointer-events", "auto");
-
-  localStorage.setItem("mode", $("#mode").val());
-  localStorage.setItem("difficulty", $("#difficulty").val());
-  localStorage.setItem("marker", $("#marker").val());
 });
 
 $("#reset").click(() => {
