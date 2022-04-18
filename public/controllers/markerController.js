@@ -33,7 +33,7 @@ const placeMarker = (index) => {
     barAnim(whichPosition(board), whoWon);
 
     //blocking clicks
-    $("#right").pointerEvents = "none";
+    $("#right").css("pointer-events", "none");
   } else if (gameOver()) {
     drawAnim();
     return "draw";
