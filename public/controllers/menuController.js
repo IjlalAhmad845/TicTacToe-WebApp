@@ -1,4 +1,4 @@
-import { toggle } from "../index.js";
+import { setMarker } from "../index.js";
 
 //control mode drop down
 $("#mode").change(function () {
@@ -19,7 +19,7 @@ $("#mode").change(function () {
 
 //control marker drop down
 $("#marker").change(() => {
-  toggle();
+  setMarker();
 });
 
 //control start and reset buttons

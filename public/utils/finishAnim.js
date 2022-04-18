@@ -1,5 +1,6 @@
 import { circleWon } from "../components/circle.js";
 import { crossWon } from "../components/cross.js";
+import { AIMarker } from "../index.js";
 
 const barAnim = (barPosition, whoWon) => {
   const barClass =
@@ -69,7 +70,7 @@ const WonAnim = (whoWon) => {
     //adding text
     $("#right").append(
       `<div class="self-center text-center text-2xl text-yellow-300 font-bold mt-24 sm:mt-28"> 
-      ${whoWon === "X" ? "CROSS" : "CIRCLE"} WINS!!
+      ${finishMessage(whoWon)}
       </div>`
     );
   }, 700);
@@ -80,6 +81,15 @@ const WonAnim = (whoWon) => {
   }, 800);
 };
 
+const finishMessage = (whoWon) => {
+  if ($("#mode")[0].selectedIndex !== 1) {
+    if (whoWon === "X") return "CROSS WINS!!";
+    else return "CIRCLE WINS!!";
+  } else {
+    if (whoWon === AIMarker) return "YOU LOST!!";
+    else return "YOU WON!!";
+  }
+};
 const drawAnim = () => {
   //hiding grid
   $(".grid").css("opacity", "0");

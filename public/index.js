@@ -29,14 +29,20 @@ const isIndexEmpty = (index) => {
   if (board[index] === "") return true;
   return false;
 };
-let playerMarker = $("#marker").val();
+let playerMarker;
 let AIMarker;
-let toggler = playerMarker === "O";
+let toggler;
 const board = ["", "", "", "", "", "", "", "", ""];
 
+const setMarker = () => {
+  playerMarker = $("#marker").val();
+  AIMarker = playerMarker === "X" ? "O" : "X";
+  toggler = playerMarker === "O";
+};
+
+setMarker();
 const toggle = () => {
-  playerMarker = toggler ? "O" : "X";
-  AIMarker = toggler ? "X" : "O";
   toggler = !toggler;
 };
-export { toggle, toggler, board, playerMarker, AIMarker };
+
+export { toggle, setMarker, toggler, board, playerMarker, AIMarker };
