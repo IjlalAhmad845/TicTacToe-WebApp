@@ -1,5 +1,6 @@
 //telling the user who won
 const isFinished = (board) => {
+  let winner = null;
   if (board[0] !== "" && board[0] === board[1] && board[1] === board[2]) {
     return board[0];
   } else if (
@@ -44,9 +45,20 @@ const isFinished = (board) => {
     board[4] === board[6]
   ) {
     return board[2];
-  } else {
-    return "";
   }
+
+  if (winner === null && hasOpenSpots(board) === false) {
+    winner = "draw";
+  }
+
+  return winner;
+};
+
+const hasOpenSpots = (board) => {
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] === "") return true;
+  }
+  return false;
 };
 
 //tells which position is matched

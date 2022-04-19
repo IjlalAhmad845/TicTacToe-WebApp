@@ -1,82 +1,62 @@
 import { playerMarker, AIMarker } from "../../index.js";
-import enemy from "./enemy.js";
+import { isFinished } from "../finishHandler.js";
 
-//every possible move of player
 const god = (board) => {
-  //if player is in center, take corner if not taken already
-  if (board[4] === playerMarker && !isMarkerOnCorner(board, AIMarker))
-    return randomCorner();
+  let bestScore = -Infinity;
+  let bestMove;
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] === "") {
+      board[i] = AIMarker;
+      let score = minimax(board, 0, false);
 
-  //if player is in corner, take center if not taken already
-  if (isMarkerOnCorner(board, playerMarker) && board[4] === "") return 4;
+      board[i] = "";
+      if (score > bestScore) {
+        bestScore = score;
+        bestMove = i;
+      }
+    }
+  }
+  return bestMove;
+};
 
-  //only one edge move of AI is enough
-  if (!isMarkerOnEdge(board, AIMarker)) {
-    //rest of the possible moves of player
-    if (
-      board[0] === playerMarker &&
-      (board[8] === playerMarker ||
-        board[5] === playerMarker ||
-        board[7] === playerMarker)
-    )
-      return randomEdge(board);
-    else if (
-      board[2] === playerMarker &&
-      (board[6] === playerMarker ||
-        board[3] === playerMarker ||
-        board[7] === playerMarker)
-    )
-      return randomEdge(board);
-    else if (
-      board[6] === playerMarker &&
-      (board[1] === playerMarker ||
-        board[2] === playerMarker ||
-        board[5] === playerMarker)
-    )
-      return randomEdge(board);
-    else if (
-      board[8] === playerMarker &&
-      (board[0] === playerMarker ||
-        board[1] === playerMarker ||
-        board[3] === playerMarker)
-    )
-      return randomEdge(board);
+//minimax algorithm
+//for every possible combination of moves
+const minimax = (board, depth, isMaximizing) => {
+  let result = isFinished(board);
+
+  if (result !== null) {
+    if (result === "draw") {
+      return 0;
+    } else if (result === playerMarker) {
+      return -1;
+    } else if (result === AIMarker) {
+      return 1;
+    }
   }
 
-  //if above cases are not met, take enemy move
-  return enemy(board);
-};
-
-//randomly select a corner
-const randomCorner = () => {
-  const corners = [0, 2, 6, 8];
-  const random = Math.floor(Math.random() * 4);
-  return corners[random];
-};
-
-//randomly select a edge if available
-const randomEdge = (board) => {
-  const edges = [1, 3, 5, 7];
-  const random = Math.floor(Math.random() * 4);
-  if (board[edges[random]] === "") return edges[random];
-  else return randomEdge(board);
-};
-
-//checking marker is on any corner
-const isMarkerOnCorner = (board, marker) => {
-  const corners = [0, 2, 6, 8];
-  for (let i = 0; i < corners.length; i++) {
-    if (board[corners[i]] === marker) return true;
+  if (isMaximizing) {
+    let bestScore = -Infinity;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === "") {
+        board[i] = AIMarker;
+        let score = minimax(board, depth + 1, false);
+        board[i] = "";
+        bestScore = Math.max(score, bestScore);
+      }
+    }
+    return bestScore;
+  } else {
+    let bestScore = Infinity;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === "") {
+        board[i] = playerMarker;
+        let score = minimax(board, depth + 1, true);
+        board[i] = "";
+        bestScore = Math.min(score, bestScore);
+      }
+    }
+    return bestScore;
   }
-  return false;
 };
 
-//checking marker is on any edge
-const isMarkerOnEdge = (board, marker) => {
-  const edges = [1, 3, 5, 7];
-  for (let i = 0; i < edges.length; i++) {
-    if (board[edges[i]] === marker) return true;
-  }
-  return false;
-};
 export default god;

@@ -34,19 +34,11 @@ const placeMarker = (index) => {
 
     //blocking clicks
     $("#right").css("pointer-events", "none");
-  } else if (gameOver()) {
+  } else if (whoWon === "draw") {
     drawAnim();
-    return "draw";
   }
 
   return whoWon;
 };
 
-//check if game is over and no one won
-const gameOver = () => {
-  for (let i = 0; i < board.length; i++) {
-    if (board[i] === "") return false;
-  }
-  return true;
-};
 export default placeMarker;
