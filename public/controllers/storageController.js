@@ -1,9 +1,9 @@
-const mode = localStorage.getItem("mode");
-const difficulty = localStorage.getItem("difficulty");
-const marker = localStorage.getItem("marker");
+let mode = localStorage.getItem("mode");
+let difficulty = localStorage.getItem("difficulty");
+let marker = localStorage.getItem("marker");
 
-const difficultyOpacity = localStorage.getItem("difficultyOpacity");
-const difficultyPointerEvents = localStorage.getItem("difficultyPointerEvents");
+let difficultyOpacity = localStorage.getItem("difficultyOpacity");
+let difficultyPointerEvents = localStorage.getItem("difficultyPointerEvents");
 
 if (mode === null) mode = "vs Player";
 if (difficulty === null) difficulty = "Kid";
